@@ -1,0 +1,56 @@
+spring:
+  cache:
+    type: none
+  datasource:
+    url: jdbc:h2:mem:jira-test;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: always
+  liquibase:
+    change-log: "classpath:test-changelog.sql"
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: test-github-client-id
+            client-secret: test-github-client-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: read
+          google:
+            client-id: test-google-client-id
+            client-secret: test-google-client-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: email,profile
+          gitlab:
+            client-id: test-gitlab-client-id
+            client-secret: test-gitlab-client-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: read_user
+      provider:
+        gitlab:
+          authorization-uri: https://gitlab.com/oauth/authorize
+          token-uri: https://gitlab.com/oauth/token
+          user-info-uri: https://gitlab.com/api/v4/user
+          user-name-attribute: email
+  mail:
+    host: localhost
+    port: 25
+    username: test-user
+    password: test-password
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
