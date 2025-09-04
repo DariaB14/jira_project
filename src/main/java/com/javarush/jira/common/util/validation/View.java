@@ -10,8 +10,3 @@ public class View {
     }
 }
 
-/*
-Это класс View с интерфейсами для Jackson JSON Views.
-JSON Views - это механизм в Jackson для контроля того, какие поля включать
-в JSON ответ при разных сценариях.
- */

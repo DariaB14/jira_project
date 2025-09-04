@@ -17,18 +17,3 @@ public interface ReportRepository extends BaseRepository<Task> {
             "ORDER BY r.id")
     List<TaskSummary> getTaskSummaries(long sprintId);
 }
-
-/*
-Создает объекты TaskSummary прямо в запросе
-Конструктор: TaskSummary(String title, long count)
-
-Соединяет справочник статусов с задачами
-Фильтрует задачи по sprintId
-
-SpEL выражение для получения enum значения
-Эквивалентно: r.refType = 3 (порядковый номер TASK_STATUS)
-
-Группирует по статусу
-Сортирует по ID статуса
-
- */

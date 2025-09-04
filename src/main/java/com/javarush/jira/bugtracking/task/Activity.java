@@ -40,8 +40,6 @@ public class Activity extends BaseEntity implements HasAuthorId {
     private Long authorId;
 
     @UpdateTimestamp
-    /*автоматически устанавливать в это поле текущую дату и время каждый раз,
-    когда сущность обновляется. */
     @Nullable
     @Column(name = "updated")
     private LocalDateTime updated;

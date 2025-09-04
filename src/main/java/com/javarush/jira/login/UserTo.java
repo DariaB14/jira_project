@@ -28,14 +28,10 @@ public class UserTo extends BaseTo implements HasIdAndEmail, Serializable {
     private String email;
 
     @NotBlank(groups = {View.OnCreate.class})
-    //обязателен только при создании
     @Size(min = 5, max = 32, groups = {View.OnCreate.class})
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    //не включать в JSON если null
     @JsonView(View.OnCreate.class)
-    //видим только в определенном view
     @Schema(accessMode = Schema.AccessMode.WRITE_ONLY) // https://stackoverflow.com/a/28025008/548473
-    //в Swagger только для записи
     private String password;
 
     @NotBlank

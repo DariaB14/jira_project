@@ -1,0 +1,366 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------------< com.javarush:jira >--------------------------
+[INFO] Building JiraRush 1.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.0.2:run (default-cli) > test-compile @ jira >>>
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ jira ---
+[INFO] Copying 2 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ jira ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ jira ---
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ jira ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.0.2:run (default-cli) < test-compile @ jira <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.0.2:run (default-cli) @ jira ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+[32m :: Spring Boot :: [39m              [2m (v3.0.2)[0;39m
+
+Hibernate: 
+    
+    alter table if exists activity 
+       drop constraint if exists FKenkqf7j2ybbur2vngd3u1l8ao
+Hibernate: 
+    
+    alter table if exists contact 
+       drop constraint if exists FKorps6ifsim0u6ymkqxwua1817
+Hibernate: 
+    
+    alter table if exists project 
+       drop constraint if exists FKt0just6g3205u402vn88i0fhy
+Hibernate: 
+    
+    alter table if exists sprint 
+       drop constraint if exists FKerwve0blrvfhqm1coxo69f0xr
+Hibernate: 
+    
+    alter table if exists task 
+       drop constraint if exists FK82ogu5quub0bhyuhp25riy7pf
+Hibernate: 
+    
+    alter table if exists task 
+       drop constraint if exists FKk8qrwowg31kx7hp93sru1pdqa
+Hibernate: 
+    
+    alter table if exists task 
+       drop constraint if exists FKao8fqiovc2g9en1pq7jaengh6
+Hibernate: 
+    
+    alter table if exists task_tag 
+       drop constraint if exists FKmnb6mkxwtvkg1utqig0ps56ne
+Hibernate: 
+    
+    alter table if exists user_role 
+       drop constraint if exists FKj345gk1bovqvfame88rcx7yyx
+Hibernate: 
+    
+    drop table if exists activity cascade
+Hibernate: 
+    
+    drop table if exists attachment cascade
+Hibernate: 
+    
+    drop table if exists contact cascade
+Hibernate: 
+    
+    drop table if exists mail_case cascade
+Hibernate: 
+    
+    drop table if exists profile cascade
+Hibernate: 
+    
+    drop table if exists project cascade
+Hibernate: 
+    
+    drop table if exists reference cascade
+Hibernate: 
+    
+    drop table if exists sprint cascade
+Hibernate: 
+    
+    drop table if exists task cascade
+Hibernate: 
+    
+    drop table if exists task_tag cascade
+Hibernate: 
+    
+    drop table if exists user_belong cascade
+Hibernate: 
+    
+    drop table if exists user_role cascade
+Hibernate: 
+    
+    drop table if exists users cascade
+Hibernate: 
+    
+    create table activity (
+       id bigserial not null,
+        author_id bigint not null,
+        comment varchar(4096),
+        description varchar(4096),
+        estimate integer,
+        priority_code varchar(32),
+        status_code varchar(32),
+        task_id bigint not null,
+        title varchar(1024) not null,
+        type_code varchar(32) not null,
+        updated timestamp(6),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table attachment (
+       id bigserial not null,
+        name varchar(128) not null,
+        date_time timestamp default now(),
+        file_link varchar(255) not null,
+        object_id bigint not null,
+        object_type smallint not null,
+        user_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table contact (
+       code varchar(255) not null,
+        id bigint not null,
+        value varchar(256) not null,
+        primary key (code, id)
+    )
+Hibernate: 
+    
+    create table mail_case (
+       id bigserial not null,
+        date_time timestamp(6) not null,
+        email varchar(255) not null,
+        name varchar(255) not null,
+        result varchar(255) not null,
+        template varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table profile (
+       id bigint not null,
+        last_failed_login timestamp(6),
+        last_login timestamp(6),
+        mail_notifications bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table project (
+       id bigserial not null,
+        endpoint timestamp(6),
+        startpoint timestamp(6) not null,
+        title varchar(1024) not null,
+        code varchar(32) not null,
+        description varchar(4096) not null,
+        parent_id bigint,
+        type_code varchar(32) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table reference (
+       id bigserial not null,
+        endpoint timestamp(6),
+        startpoint timestamp(6) not null,
+        title varchar(1024) not null,
+        aux varchar,
+        code varchar(32) not null,
+        ref_type smallint not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table sprint (
+       id bigserial not null,
+        endpoint timestamp(6),
+        startpoint timestamp(6) not null,
+        code varchar(32) not null,
+        project_id bigint,
+        status_code varchar(32) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table task (
+       id bigserial not null,
+        endpoint timestamp(6),
+        startpoint timestamp(6) not null,
+        title varchar(1024) not null,
+        parent_id bigint,
+        project_id bigint,
+        sprint_id bigint,
+        status_code varchar(32) not null,
+        type_code varchar(32) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table task_tag (
+       task_id bigint not null,
+        tag varchar(255)
+    )
+Hibernate: 
+    
+    create table user_belong (
+       id bigserial not null,
+        endpoint timestamp(6),
+        startpoint timestamp(6) not null,
+        object_id bigint not null,
+        object_type smallint not null,
+        user_id bigint not null,
+        user_type_code varchar(32) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user_role (
+       user_id bigint not null,
+        role smallint
+    )
+Hibernate: 
+    
+    create table users (
+       id bigserial not null,
+        endpoint timestamp(6),
+        startpoint timestamp(6) not null,
+        display_name varchar(32) not null,
+        email varchar(128) not null,
+        first_name varchar(32) not null,
+        last_name varchar(32),
+        password varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table if exists project 
+       add constraint UK_eh3nusutt0qy84a4yr9pfxkyg unique (code)
+Hibernate: 
+    
+    alter table if exists reference 
+       add constraint uk_reference_ref_type_code unique (ref_type, code)
+Hibernate: 
+    
+    alter table if exists task_tag 
+       add constraint uk_task_tag unique (task_id, tag)
+Hibernate: 
+    
+    alter table if exists user_belong 
+       add constraint uk_user_belong unique (object_id, object_type, user_id, user_type_code)
+Hibernate: 
+    
+    alter table if exists user_role 
+       add constraint uk_user_role unique (user_id, role)
+Hibernate: 
+    
+    alter table if exists users 
+       add constraint UK_4aub6vqmnun7rt481gp123xph unique (display_name)
+Hibernate: 
+    
+    alter table if exists users 
+       add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email)
+Hibernate: 
+    
+    alter table if exists activity 
+       add constraint FKenkqf7j2ybbur2vngd3u1l8ao 
+       foreign key (author_id) 
+       references users
+Hibernate: 
+    
+    alter table if exists contact 
+       add constraint FKorps6ifsim0u6ymkqxwua1817 
+       foreign key (id) 
+       references profile
+Hibernate: 
+    
+    alter table if exists project 
+       add constraint FKt0just6g3205u402vn88i0fhy 
+       foreign key (parent_id) 
+       references project 
+       on delete cascade
+Hibernate: 
+    
+    alter table if exists sprint 
+       add constraint FKerwve0blrvfhqm1coxo69f0xr 
+       foreign key (project_id) 
+       references project
+Hibernate: 
+    
+    alter table if exists task 
+       add constraint FK82ogu5quub0bhyuhp25riy7pf 
+       foreign key (parent_id) 
+       references task 
+       on delete cascade
+Hibernate: 
+    
+    alter table if exists task 
+       add constraint FKk8qrwowg31kx7hp93sru1pdqa 
+       foreign key (project_id) 
+       references project
+Hibernate: 
+    
+    alter table if exists task 
+       add constraint FKao8fqiovc2g9en1pq7jaengh6 
+       foreign key (sprint_id) 
+       references sprint
+Hibernate: 
+    
+    alter table if exists task_tag 
+       add constraint FKmnb6mkxwtvkg1utqig0ps56ne 
+       foreign key (task_id) 
+       references task 
+       on delete cascade
+Hibernate: 
+    
+    alter table if exists user_role 
+       add constraint FKj345gk1bovqvfame88rcx7yyx 
+       foreign key (user_id) 
+       references users 
+       on delete cascade
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.aux,
+        r1_0.code,
+        r1_0.endpoint,
+        r1_0.ref_type,
+        r1_0.startpoint,
+        r1_0.title 
+    from
+        reference r1_0 
+    order by
+        r1_0.id asc
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.024 s
+[INFO] Finished at: 2025-09-04T01:47:05+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.0.2:run (default-cli) on project jira: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

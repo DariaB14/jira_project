@@ -12,7 +12,3 @@ public interface TaskMapper extends BaseMapper<Task, TaskTo> {
     TaskTo toTo(Task task);
 }
 
-/*
-Для списков задач (минимальный набор данных)
-Быстрый маппинг без лишних данных
- */

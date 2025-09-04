@@ -19,7 +19,4 @@ public class ConfirmData implements Serializable {
         this.token = UUID.randomUUID().toString();
     }
 
-    /*ранит данные пользователя и токен подтверждения в процессе регистрации.
-    likely используется для временного хранения перед подтверждением email.
-     */
 }

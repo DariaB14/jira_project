@@ -231,4 +231,7 @@ VALUES ('project_author', 'Author', 5),
 
 
 
-
+insert into ACTIVITY ( ID, AUTHOR_ID, TASK_ID, UPDATED, STATUS_CODE )
+values (100, 1, 1, CURRENT_TIMESTAMP, 'in_progress'),
+       (101, 2, 5, CURRENT_TIMESTAMP, 'done'),
+       (102, 3, 4, CURRENT_TIMESTAMP, 'ready_for_review');

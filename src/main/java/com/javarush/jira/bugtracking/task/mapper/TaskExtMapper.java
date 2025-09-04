@@ -13,8 +13,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(config = TimestampMapper.class, uses = {SprintMapper.class, ProjectMapper.class})
-// 1. Наследуем конфигурацию временных меток из TimestampMapper
-// Используем другие мапперы для сложных полей
 public interface TaskExtMapper extends BaseMapper<Task, TaskToExt> {
 
     static long checkProjectBelong(long projectId, Task dbTask) {
@@ -35,14 +33,6 @@ public interface TaskExtMapper extends BaseMapper<Task, TaskToExt> {
     @Override
     @Mapping(target = "projectId", expression = "java(TaskExtMapper.checkProjectBelong(taskToExt.getProjectId(), task))")
     @Mapping(target = "sprintId", expression = "java(TaskExtMapper.checkUserAuthorities(taskToExt.getSprintId(), task))")
-        // 7. Двойная валидация при обновлении:
-        // - Принадлежность проекту
-        // - Права на изменение спринта
     Task updateFromTo(TaskToExt taskToExt, @MappingTarget Task task);
 }
 
-/*
-Автоматический маппинг сложных полей через uses = {SprintMapper.class, ProjectMapper.class}
-Двойная защита при обновлении задачи
-Только админы/менеджеры могут менять спринт задачи
- */

@@ -20,11 +20,8 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class TimestampEntry extends BaseEntity {
     @CreationTimestamp
-    /* Hibernate должен автоматически устанавливать в это поле текущую дату и время
-    в момент первого сохранения сущности (операция INSERT).*/
     @Column(name = "startpoint", nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    //клиент не сможет передать свое значение
     protected LocalDateTime startpoint;
 
 

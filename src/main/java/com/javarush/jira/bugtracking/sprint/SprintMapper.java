@@ -10,7 +10,6 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(config = TimestampMapper.class)
 public interface SprintMapper extends BaseMapper<Sprint, SprintTo> {
-    // ЗАЩИТА: проверяет, что спринт принадлежит правильному проекту
     static long checkProjectBelong(long projectId, Sprint dbSprint) {
         if (projectId != dbSprint.getProjectId())
             throw new DataConflictException("Sprint " + dbSprint.id() + " doesn't belong to Project " + projectId);
@@ -19,6 +18,5 @@ public interface SprintMapper extends BaseMapper<Sprint, SprintTo> {
 
     @Override
     @Mapping(target = "projectId", expression = "java(SprintMapper.checkProjectBelong(sprintTo.getProjectId(), sprint))")
-        // При обновлении автоматически проверяет принадлежность
     Sprint updateFromTo(SprintTo sprintTo, @MappingTarget Sprint sprint);
 }

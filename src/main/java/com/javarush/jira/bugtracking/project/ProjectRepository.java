@@ -9,9 +9,5 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface ProjectRepository extends TimestampRepository<Project> {
     @Query("SELECT p FROM Project p LEFT JOIN FETCH p.parent WHERE p.id =:id")
-    //JOIN FETCH:
-        //Решает проблему N+1
-        //Загружает родительский проект сразу (не лениво)
-        //Избегает отдельного запроса для получения parent
     Optional<Project> findFullById(long id);
 }

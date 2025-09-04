@@ -9,10 +9,3 @@ import org.mapstruct.Mapper;
 public interface ProjectMapper extends BaseMapper<Project, ProjectTo> {
 }
 
-/*
-Преобразует: Project (из базы) ↔ ProjectTo (для браузера)
-Для чего используется?
-
-Списки проектов - только основные данные
-Краткая информация - когда не нужны детали
- */

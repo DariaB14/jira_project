@@ -18,22 +18,12 @@ import java.util.function.Function;
 
 @UtilityClass
 public class Util {
-    /*
-    Util - это швейцарский нож утилитных методов которые:
-    Работают с коллекциями и optional
-    Строят деревья из плоских списков
-    Проверяют null и существование объектов
-    Обрабатывают HTML и шаблоны
-    Работают с временными метками
-     */
     public static <K, V> V getExisted(Map<K, V> map, K key) {
         return notNull(map.get(key), "Value with key {0} not found", key);
-        //Достает значение из Map по ключу
     }
 
     public static <T> T checkExist(long id, Optional<T> opt) {
         return opt.orElseThrow(() -> new NotFoundException("Entity with id=" + id + " not found"));
-        //Проверяет есть ли значение в Optional
     }
 
     public static <T> T notNull(@Nullable T object, String message, Object... vars) {
@@ -45,12 +35,10 @@ public class Util {
 
     @NotNull
     public static String getTitle(String template) {
-        //получение заголовка HTML
         return notNull(Jsoup.parse(template).title(), "Template must has title as nonnull mail subject");
     }
 
     public static Map<String, Object> mergeMap(@NonNull Map<String, Object> map1, @Nullable Map<String, Object> map2) {
-        //Объединяет две Map в одну
         if (CollectionUtils.isEmpty(map2)) return map1;
         if (CollectionUtils.isEmpty(map1)) return map2;
         Map<String, Object> result = new HashMap<>(map1);
@@ -59,8 +47,6 @@ public class Util {
     }
 
     public static <T extends HasIdAndParentId, R extends ITreeNode<T, R>> List<R> makeTree(List<T> nodes, Function<T, R> treeNodeCreator) {
-        //Преобразует плоский список в иерархическое дерево
-        //Использует parentId для построения иерархии
         List<R> roots = new ArrayList<>();
         Map<Long, R> map = new HashMap<>();
         for (T node : nodes) {
@@ -85,7 +71,6 @@ public class Util {
     }
 
     public boolean isEnabled(TimestampEntry entity) {
-        //Проверяет активна ли сущность based on временных меток
         return entity.getEndpoint() == null || entity.getEndpoint().isAfter(LocalDateTime.now());
     }
 }

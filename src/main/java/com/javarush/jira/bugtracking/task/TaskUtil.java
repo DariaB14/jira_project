@@ -15,7 +15,6 @@ import static com.javarush.jira.ref.ReferenceService.getRefs;
 
 public class TaskUtil {
 
-    //Возвращает карту возможных статусов для перехода из текущего статуса
     static Map<String, RefTo> getPossibleStatusRefs(String currentStatus) {
         Set<String> possibleStatuses = getPossibleStatuses(currentStatus);
         return getRefs(TASK_STATUS).entrySet().stream()
@@ -23,7 +22,6 @@ public class TaskUtil {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (ref1, ref2) -> ref1, LinkedHashMap::new));
     }
 
-    //Проверяет можно ли сменить статус с currentStatus на newStatus
     static void checkStatusChangePossible(String currentStatus, String newStatus) {
         if (!getPossibleStatuses(currentStatus).contains(newStatus)) {
             throw new DataConflictException("Cannot change task status from " + currentStatus + " to " + newStatus);
@@ -39,7 +37,6 @@ public class TaskUtil {
         return possibleStatuses;
     }
 
-    //Заполняет поля задачи из последней активности где они были изменены
     static void fillExtraFields(TaskToFull taskToFull, List<Activity> activities) {
         if (!activities.isEmpty()) {
             taskToFull.setUpdated(activities.get(0).getUpdated());
@@ -59,7 +56,6 @@ public class TaskUtil {
         }
     }
 
-    //Ищет в истории последнее не-null значение
     static String getLatestValue(List<Activity> activities, Function<Activity, String> valueExtractFunction) {
         for (Activity activity : activities) {
             String value = valueExtractFunction.apply(activity);
@@ -70,9 +66,6 @@ public class TaskUtil {
         return null;
     }
 
-    //Создает новую активность для истории изменений
-    //Заполняет поля из DTO задачи
-    //Устанавливает текущего пользователя как автора
     static Activity makeActivity(long taskId, TaskToExt taskTo) {
         return new Activity(null, taskId, AuthUser.authId(), null, null, taskTo.getStatusCode(), taskTo.getPriorityCode(),
                 taskTo.getTypeCode(), taskTo.getTitle(), taskTo.getDescription(), taskTo.getEstimate());

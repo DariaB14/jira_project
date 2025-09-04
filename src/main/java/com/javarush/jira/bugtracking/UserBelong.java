@@ -13,10 +13,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "user_belong",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"object_id", "object_type", "user_id", "user_type_code"}, name = "uk_user_belong")})
-/* Ограничение uk_user_belong гарантирует, что комбинация полей
-(object_id, object_type, user_id, user_type_code) будет уникальной.
-Это означает, что одного и того же пользователя нельзя назначить на один и тот же
-объект в одной и той же роли дважды. */
 @Getter
 @Setter
 @NoArgsConstructor

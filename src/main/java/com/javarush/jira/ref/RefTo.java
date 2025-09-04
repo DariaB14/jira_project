@@ -10,7 +10,6 @@ import org.springframework.lang.Nullable;
 
 @Value
 @EqualsAndHashCode(of = {"refType", "code"})
-//Определяет равенство по типу справочника и коду.
 public class RefTo extends TitleTo {
     @NotNull
     RefType refType;

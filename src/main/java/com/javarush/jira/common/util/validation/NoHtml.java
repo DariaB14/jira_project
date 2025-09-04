@@ -12,13 +12,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
 @Constraint(validatedBy = NoHtmlValidator.class)
-//NoHtmlValidator.class - собственная логика валидации
 @Target({METHOD, FIELD, ANNOTATION_TYPE})
-//ANNOTATION_TYPE - можно использовать в других аннотациях (как в @Code)
 @Retention(RUNTIME)
 public @interface NoHtml {
     String message() default "{error.noHtml}";
-    //Сообщение из properties - {error.noHtml}
 
     Class<?>[] groups() default {};
 

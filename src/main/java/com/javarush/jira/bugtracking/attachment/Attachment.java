@@ -19,16 +19,11 @@ import java.time.LocalDateTime;
 public class Attachment extends NamedEntity {
 
     @Column(name = "date_time", columnDefinition = "timestamp default now()")
-    //Атрибут columnDefinition позволяет задать точный SQL-DDL тип для колонки.
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     protected LocalDateTime dateTime = LocalDateTime.now();
+
     @Column(name = "file_link", nullable = false)
     private String fileLink;
-
-    // no FK, manual check
-    /* в базе данных нет внешнего ключа (Foreign Key) для полей object_id и user_id.
-    Проверки связей (существует ли такой объект или пользователь) будут осуществляться
-    вручную в коде приложения, а не на уровне БД. */
 
     @Column(name = "object_id", nullable = false)
     @NotNull

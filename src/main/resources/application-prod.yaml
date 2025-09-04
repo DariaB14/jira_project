@@ -1,4 +1,8 @@
 spring:
+  config:
+    activate:
+      on-profile: prod
+
   datasource:
     username: ${DB_USERNAME:jira}
     password: ${DB_PASSWORD:JiraRush}

@@ -12,8 +12,6 @@ public class CodeTo extends BaseTo implements HasCode {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Setter
     boolean enabled = true;
-    //Отображает статус активности сущности.
-
 
     @Code
     String code;

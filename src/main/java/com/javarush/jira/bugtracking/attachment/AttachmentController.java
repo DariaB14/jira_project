@@ -19,32 +19,16 @@ import static com.javarush.jira.common.BaseHandler.createdResponse;
 
 @RestController
 @RequestMapping(value = AttachmentController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-//value: Базовый путь для всех методов контроллера - /api/attachments
-//produces: Указывает, что все методы по умолчанию возвращают application/json
-//Эффект: Все эндпоинты будут иметь префикс /api/attachments
 @RequiredArgsConstructor
 @Slf4j
-//логгер
 public class AttachmentController {
     static final String REST_URL = "/api/attachments";
     private final AttachmentRepository repository;
 
     @Transactional
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    //Указывает, что метод принимает multipart/form-data
     public ResponseEntity<Attachment> upload(@RequestPart MultipartFile file, @RequestParam ObjectType type,
                                              @RequestParam Long objectId, @AuthenticationPrincipal AuthUser authUser) {
-        /*
-        @RequestPart: Для частей multipart запроса (файлов)
-        MultipartFile: Spring интерфейс для работы с загружаемыми файлами
-        Методы MultipartFile: getOriginalFilename() - оригинальное имя файла
-        getBytes() - содержимое файла getSize() - размер файла getContentType() - MIME тип
-
-        @RequestParam: Извлекает параметр из URL query string или form data
-        ObjectType: Предположительно enum с типами объектов (TASK, USER, etc.)
-
-         */
-
         log.debug("upload file {} to folder {}", file.getOriginalFilename(), type.toString().toLowerCase());
         String path = FileUtil.getPath(type.toString());
         Attachment attachment = new Attachment(null, path, objectId, type, authUser.id(), file.getOriginalFilename());
@@ -65,7 +49,6 @@ public class AttachmentController {
     }
 
     @GetMapping(value = "/download/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    //Указывает, что возвращается бинарный поток -> download file
     public ResponseEntity<Resource> download(@PathVariable long id) {
         log.debug("download file id = {}", id);
         Attachment attachment = repository.getExisted(id);

@@ -8,10 +8,6 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-/*
-Указывает, что при генерации методов equals() и hashCode() нужно учитывать поля
-и из родительского класса (BaseTo), а не только из текущего.
- */
 public class NamedTo extends BaseTo {
     @NotBlank
     @Size(min = 2, max = 128)

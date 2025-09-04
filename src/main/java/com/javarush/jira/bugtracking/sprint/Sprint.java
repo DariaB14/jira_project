@@ -19,12 +19,10 @@ public class Sprint extends TimestampEntry implements HasCode {
     @Column(name = "code", nullable = false)
     private String code;
 
-    // link to Reference.code with RefType.SPRINT_STATUS
     @Code
     @Column(name = "status_code", nullable = false)
     private String statusCode;
 
-    //    https://stackoverflow.com/a/44539145/548473
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false, insertable = false, updatable = false)
     private Project project;

@@ -184,32 +184,32 @@ public class TaskService {
         task.setTags(tags);
     }
 
-//    public Duration workDuration(Task task){
-//        List<Activity> activities = activityHandler.getRepository().findAllByTaskIdOrderByUpdatedAsc(task.id());
-//        LocalDateTime inProgress = getFirstStatusTime(activities, "in_progress");
-//        LocalDateTime readyForReview = getFirstStatusTime(activities, "ready_for_review");
-//        if (inProgress == null || readyForReview == null)
-//            return Duration.ZERO;
-//        return Duration.between(inProgress, readyForReview);
-//    }
-//
-//    public Duration testDuration(Task task) {
-//        List<Activity> activities = activityHandler.getRepository().findAllByTaskIdOrderByUpdatedAsc(task.id());
-//        LocalDateTime readyForReview = getFirstStatusTime(activities, "ready_for_review");
-//        LocalDateTime done = getFirstStatusTime(activities, "done");
-//        if (readyForReview == null || done == null)
-//            return Duration.ZERO;
-//        return Duration.between(readyForReview, done);
-//    }
-//
-//    private LocalDateTime getFirstStatusTime(List<Activity> activities, String status) {
-//        for (Activity a : activities) {
-//            if (status.equals(a.getStatusCode())) {
-//                return a.getUpdated();
-//            }
-//        }
-//        return null;
-//    }
-//
+    public Duration workDuration(Task task){
+        List<Activity> activities = activityHandler.getRepository().findAllByTaskIdOrderByUpdatedAsc(task.id());
+        LocalDateTime inProgress = getFirstStatusTime(activities, "in_progress");
+        LocalDateTime readyForReview = getFirstStatusTime(activities, "ready_for_review");
+        if (inProgress == null || readyForReview == null)
+            return Duration.ZERO;
+        return Duration.between(inProgress, readyForReview);
+    }
+
+    public Duration testDuration(Task task) {
+        List<Activity> activities = activityHandler.getRepository().findAllByTaskIdOrderByUpdatedAsc(task.id());
+        LocalDateTime readyForReview = getFirstStatusTime(activities, "ready_for_review");
+        LocalDateTime done = getFirstStatusTime(activities, "done");
+        if (readyForReview == null || done == null)
+            return Duration.ZERO;
+        return Duration.between(readyForReview, done);
+    }
+
+    private LocalDateTime getFirstStatusTime(List<Activity> activities, String status) {
+        for (Activity a : activities) {
+            if (status.equals(a.getStatusCode())) {
+                return a.getUpdated();
+            }
+        }
+        return null;
+    }
+
 
 }

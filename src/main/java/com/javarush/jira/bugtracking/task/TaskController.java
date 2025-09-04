@@ -186,22 +186,22 @@ public class TaskController {
     }
 
 
-//    @GetMapping("/{id}/work-duration")
-//    public Map<String, Object> getWorkDuration(@PathVariable long id) {
-//        log.info("get work time for task id={}", id);
-//        Duration duration = taskService.workDuration(handler.getRepository().getExisted(id));
-//        return Map.of(
-//                "Duration of work", String.format("%d:%02d", duration.toHours(), duration.toMinutesPart())
-//        );
-//    }
-//
-//    @GetMapping("/{id}/test-duration")
-//    public Map<String, Object> getTestDuration(@PathVariable long id) {
-//        log.info("get test time for task id={}", id);
-//        Duration duration = taskService.testDuration(handler.getRepository().getExisted(id));
-//        return Map.of(
-//                "Duration of test", String.format("%d:%02d", duration.toHours(), duration.toMinutesPart())
-//        );
-//    }
+    @GetMapping("/{id}/work-duration")
+    public Map<String, Object> getWorkDuration(@PathVariable long id) {
+        log.info("get work time for task id={}", id);
+        Duration duration = taskService.workDuration(handler.getRepository().getExisted(id));
+        return Map.of(
+                "Duration of work", String.format("%d:%02d", duration.toHours(), duration.toMinutesPart())
+        );
+    }
+
+    @GetMapping("/{id}/test-duration")
+    public Map<String, Object> getTestDuration(@PathVariable long id) {
+        log.info("get test time for task id={}", id);
+        Duration duration = taskService.testDuration(handler.getRepository().getExisted(id));
+        return Map.of(
+                "Duration of test", String.format("%d:%02d", duration.toHours(), duration.toMinutesPart())
+        );
+    }
 }
 

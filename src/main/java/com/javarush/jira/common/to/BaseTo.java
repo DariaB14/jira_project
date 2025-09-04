@@ -14,7 +14,6 @@ import java.util.Objects;
 @Data
 public abstract class BaseTo implements HasId {
     @Schema(hidden = true)
-    //это поле не должно отображаться в документации API.
     protected Long id;
 
     @Override

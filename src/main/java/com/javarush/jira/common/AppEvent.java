@@ -4,9 +4,3 @@ package com.javarush.jira.common;
 public interface AppEvent {
 }
 
-/*
-Пустой интерфейс-маркер.
-Зачем нужно: Помечает классы как события приложения. Используется в системе событий
-(event publishing/listening) Spring Framework. Все record'ы и классы ниже реализуют
-этот интерфейс, что означает, что они могут быть опубликованы как события.
- */

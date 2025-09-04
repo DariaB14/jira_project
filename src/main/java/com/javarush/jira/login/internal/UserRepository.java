@@ -13,27 +13,15 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 @CacheConfig(cacheNames = "users")
-// Общая конфигурация кэша
 public interface UserRepository extends BaseRepository<User> {
 
     @Cacheable(key = "#email")
     @Query("SELECT u FROM User u WHERE u.email = LOWER(:email)")
     Optional<User> findByEmailIgnoreCase(String email);
-    /*
-    @Cacheable - кэширует результат запроса
-key = "#email" - использует email как ключ кэша
-LOWER(:email) - case-insensitive поиск
-Кэширует как найденных пользователей, так и Optional.empty()
-     */
 
     @Transactional
     @CachePut(key = "#user.email")
     User save(User user);
-
-    /*
-    @CachePut - обновляет запись в кэше при сохранении
-Поддерживает консистентность между БД и кэшем
-     */
 
     default User getExistedByEmail(String email) {
         return findByEmailIgnoreCase(email).orElseThrow(() -> new NotFoundException("User with email=" + email + " not found"));

@@ -9,12 +9,9 @@ import org.mapstruct.MappingTarget;
 
 // https://stackoverflow.com/questions/57860451/mapstruct-inheritance-more-than-one-configuration-prototype-is-application
 @MapperConfig(componentModel = "spring", mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_FROM_CONFIG)
-// - мапперы будут Spring-бинами
-// AUTO_INHERIT_FROM_CONFIG - автоматическое наследование настроек
+
 public interface TimestampMapper<E extends TimestampEntry, T extends CodeTo> {
     @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "id", ignore = true)
-        // При обновлении Entity из DTO поле enabled не меняется
-// Оно вычисляется автоматически из startpoint/endpoint
     E updateFromTo(T to, @MappingTarget E entity);
 }

@@ -331,11 +331,7 @@ drop index UK_USER_BELONG;
 create unique index UK_USER_BELONG on USER_BELONG (OBJECT_ID, OBJECT_TYPE, USER_ID, USER_TYPE_CODE) where ENDPOINT is null;
 
 
--- insert into ACTIVITY ( ID, AUTHOR_ID, TASK_ID, UPDATED, STATUS_CODE )
--- values (100, 6, 1, '2023-05-15 09:05:10', 'in_progress'),
---        (101, 5, 1, '2023-05-15 12:25:10', 'ready_for_review'),
---        (102, 6, 1, '2023-05-15 14:05:10', 'done');
---
+
 
 
 

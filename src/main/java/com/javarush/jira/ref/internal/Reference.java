@@ -14,14 +14,10 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "reference",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"ref_type", "code"}, name = "uk_reference_ref_type_code")})
-/* Ограничение uk_reference_ref_type_code гарантирует, что комбинация полей
-(ref_type, code) будет уникальной. Это означает, что в рамках одного типа
-справочника (RefType) все коды должны быть уникальными. */
+
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"refType", "code"}, callSuper = false)
-/* Lombok генерирует методы equals() и hashCode(), основанные только на полях
-refType и code.  callSuper = false: Не использовать реализацию из суперкласса
-(TitleEntity). */
+
 public class Reference extends TitleEntity {
 
     @Column(name = "ref_type", nullable = false)

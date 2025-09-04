@@ -34,17 +34,8 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class User extends TimestampEntry implements HasIdAndEmail, Serializable {
-    /* HasIdAndEmail: Пользовательский интерфейс, гарантирующий наличие методов
-    getId() и getEmail(). Полезен для универсальной обработки.
-    Serializable: Позволяет объектам этого класса быть сериализованными
-    (преобразованными в поток байтов). Это может потребоваться для кэширования,
-    сохранения состояния сессии или передачи по сети в распределенных системах.*/
 
     @Serial
-    /* Уникальный идентификатор версии сериализованного класса.
-    Зачем нужно: Если структура класса изменится (например, добавится поле),
-    старая сериализованная версия не будет совместима с новой. Это поле помогает
-    механизму сериализации обнаружить несовместимость и выбросить исключение. */
     private static final long serialVersionUID = 1L;
 
     @NoHtml
@@ -62,15 +53,11 @@ public class User extends TimestampEntry implements HasIdAndEmail, Serializable 
 
     @Column(name = "password")
     @NotBlank(groups = {View.OnCreate.class})
-    /* Валидация на обязательность поля сработает только для группы View.OnCreate.class.
-    Это означает, что пароль обязателен только при создании пользователя. */
     @Size(min = 5, max = 128, groups = {View.OnCreate.class})
     // https://stackoverflow.com/a/12505165/548473
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonView(View.OnCreate.class)
-    /* Указывает Jackson включать это поле в JSON только при использовании
-    соответствующего View. Это еще один механизм контроля видимости поля  */
     private String password;
 
     @NotBlank

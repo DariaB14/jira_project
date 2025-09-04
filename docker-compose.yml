@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:17
+    container_name: jira-postgres
+    environment:
+      POSTGRES_DB: jira
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+        test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d jira" ]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
+  app:
+    build: .
+    container_name: jira-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL:-jdbc:postgresql://db:5432/jira}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-${DB_USERNAME}}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-${DB_PASSWORD}}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+      APP_HOST_URL: ${APP_HOST_URL:-http://localhost}
+      SPRING_MAIL_USERNAME: ${MAIL_USERNAME}
+      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GITLAB_CLIENT_ID: ${GITLAB_CLIENT_ID}
+      GITLAB_CLIENT_SECRET: ${GITLAB_CLIENT_SECRET}
+    ports:
+      - "8080:8080"
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: jira-nginx
+    depends_on:
+      - app
+    ports:
+       - "80:80"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./src/main/resources:/opt/jirarush/resources:ro
+
+volumes:
+  pgdata:
+    driver: local
+
+
