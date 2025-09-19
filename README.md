@@ -1,46 +1,41 @@
 ## [REST API](http://localhost:8080/doc)
 
-## Концепция:
+Веб-приложение  «Система управления задачами»  по аналогии с Jira / Trello. Предназначен для отслеживания активности: от ведения проектов до личных списков задач.
 
-- Spring Modulith
-    - [Spring Modulith: достигли ли мы зрелости модульности](https://habr.com/ru/post/701984/)
-    - [Introducing Spring Modulith](https://spring.io/blog/2022/10/21/introducing-spring-modulith)
-    - [Spring Modulith - Reference documentation](https://docs.spring.io/spring-modulith/docs/current-SNAPSHOT/reference/html/)
+## Технологический стек
+* Бэкенд: Spring Boot, Spring MVC, Spring Security, Spring Data JPA, Spring Test
+* База данных: PostgreSQL, H2 (для тестов), Liquibase
+* Безопасность & Инфраструктура: Caffeine, Docker, Nginx
+* Утилиты: Lombok, MapStruct, Swagger 
+* Тестирование: JUnit
+* Фронтенд: Thymeleaf, jQuery
 
-```
-  url: jdbc:postgresql://localhost:5432/jira
-  username: jira
-  password: JiraRush
-```
+## Архитектура
 
-- Есть 2 общие таблицы, на которых не fk
-    - _Reference_ - справочник. Связь делаем по _code_ (по id нельзя, тк id привязано к окружению-конкретной базе)
-    - _UserBelong_ - привязка юзеров с типом (owner, lead, ...) к объекту (таска, проект, спринт, ...). FK вручную будем
-      проверять
+Модульный монолит на основе Spring Modulith. Каждая доменная область оформлена как отдельный модуль с внутренними пакетами internal, что упрощает переход к микросервисной архитектуре в будущем.
 
-## Аналоги
+## Выполненные задачи 
 
-- https://java-source.net/open-source/issue-trackers
+Что сделано	Результат
+Удалена интеграция с VK и Yandex ->	Упрощена кодовая база, убраны лишние зависимости
+Вынесены секреты в application-secrets.properties и переменные окружения ->	Повышена безопасность и соответствие 12-Factor App
+Настроена тестовая БД H2 и профили prod/test -> Удобное тестирование без поднятия PostgreSQL
+Реализованы тесты для ProfileRestController	-> Полное покрытие публичных методов, проверка success/unsuccess сценариев
+Рефакторинг FileUtil	-> Использование современного API NIO
+Добавлен функционал тегов для задач (REST API)	-> Возможность CRUD-операций с тегами
+Реализован подсчёт времени жизненного цикла задач	-> Методы getTimeInProgress и getTimeInTesting для аналитики
+Создан Dockerfile	-> Сборка и запуск приложения в контейнере
+Создан docker-compose.yml	-> Оркестрация приложения, PostgreSQL и Nginx
 
-## Тестирование
+## Запуск
 
-- https://habr.com/ru/articles/259055/
+mvn clean package
+docker-compose up --build
 
+## Локальный запуск 
+ docker run -p 5432:5432 --name postgres-db -e POSTGRES_USER=jira -e POSTGRES_PASSWORD=JiraRush -e POSTGRES_DB=jirarush -d postgres:15
+docker run -p 5433:5432 --name postgres-db-test -e POSTGRES_USER=jira -e POSTGRES_PASSWORD=JiraRush -e POSTGRES_DB=jirarush_test -d postgres:15 
+mvn clean install
+SPRING_PROFILES_ACTIVE=prod java -jar target/jirarush.jar  
+Для заполнения БД тестовыми данными используйте скрипт resources/data4dev/data.sql
 
-В проект подключен Swagger, который отвечает за документирование API. Для того чтоб посмотреть - при запущенном
-приложении зайди на http://localhost:8080/swagger-ui/index.html
-
-
-Список выполненных задач:
-...
-
-1. + 
-2. +
-3. +
-4. +
-5. +
-6. +
-7. +
-8. + 
-9. +
-10. +- (не поднимается app, проблем с БД и nginx не видит)
