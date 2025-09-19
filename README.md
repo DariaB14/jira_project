@@ -29,6 +29,7 @@
 ## Запуск
 
 mvn clean package
+
 docker-compose up --build
 
 ## Локальный запуск 
